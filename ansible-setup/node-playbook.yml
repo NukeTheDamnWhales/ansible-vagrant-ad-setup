@@ -1,0 +1,96 @@
+---
+- hosts: all
+  become: true
+  vars:
+    resolv_conf: "/home/vagrant/ansible/templates/resolv.j2"
+    hosts_file: "/home/vagrant/ansible/templates/dc-hosts.j2"
+    samba_conf: "/home/vagrant/ansible/templates/smb.j2"
+  tasks:
+  - name: Update Cache
+    apt:
+      update_cache: yes
+
+  - name: Upgrade all packages
+    apt:
+      upgrade: 'full'
+      
+  - name: Stop and disable systemd-resolved
+    systemd:
+      name: systemd-resolved
+      state: stopped
+      enabled: no
+
+  - name: delete /etc/resolv.conf link or file
+    file:
+      path: /etc/resolv.conf
+      state: absent
+
+  - name: copy over resolv.conf for dc
+    copy:
+      src: "{{ resolv_conf }}"
+      dest: /etc/resolv.conf
+
+  - name: Ensure resolv.conf is immutable.
+    file:
+      path: /etc/resolv.conf
+      attr: i      
+
+  - name: Restart machine
+    ansible.builtin.reboot:      
+
+  - name: install required packages on dc
+    apt:
+      name: "{{ item }}"
+      update_cache: yes
+    loop:
+      - acl
+      - attr
+      - samba
+      - samba-dsdb-modules
+      - samba-vfs-modules
+      - winbind
+      - libpam-winbind
+      - libnss-winbind
+      - libpam-krb5
+      - krb5-config
+      - krb5-user
+      - dnsutils
+      - chrony
+
+  - name: Stop and disable systemd-resolved
+    systemd:
+      name: "{{ item }}"
+      state: stopped
+      enabled: no
+    loop:
+      - samba-ad-dc.service
+      - smbd.service
+      - nmbd.service
+      - winbind.service
+
+  - name: copy over hosts for dc
+    copy:
+      src: "{{ hosts_file }}"
+      dest: /etc/hosts
+
+  - name: move inital samba file before provisioning
+    command: mv /etc/samba/smb.conf /etc/samba/smb.conf.initial
+
+  - name:
+    command: samba-tool domain provision --server-role=dc --use-rfc2307 --dns-backend=SAMBA_INTERNAL --realm=EXAMPLE.DRAGONFLYSYS.COM --domain=example --adminpass=Passw0rd
+
+  - name: copy over smb conf with proper DNS forwarder enabled
+    copy:
+      src: "{{ samba_conf }}"
+      dest: /etc/samba/smb.conf
+
+  - name: enable and start samba-ad-dc
+    systemd:
+      name: samba-ad-dc.service
+      state: started
+      enabled: yes
+      masked: no
+
+            
+  - name: Restart machine
+    ansible.builtin.reboot:

@@ -1,0 +1,15 @@
+[global]
+	dns forwarder = 8.8.8.8
+	netbios name = DC
+	realm = EXAMPLE.DRAGONFLYSYS.COM
+	server role = active directory domain controller
+	workgroup = EXAMPLE
+	idmap_ldb:use rfc2307 = yes
+
+[sysvol]
+	path = /var/lib/samba/sysvol
+	read only = No
+
+[netlogon]
+	path = /var/lib/samba/sysvol/example.dragonflysys.com/scripts
+	read only = No

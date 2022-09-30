@@ -1,0 +1,75 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: Update
+    community.general.pacman:
+      update_cache: yes
+      upgrade: yes
+
+  - name: uninstall iptables
+    community.general.pacman:
+      name: iptables
+      state: absent
+      force: yes      
+      
+      
+  - name: install packages
+    community.general.pacman:
+      name: "{{ packages }}"
+      state: present
+      update_cache: yes
+    vars:
+      packages:
+        - docker
+        - vagrant
+        - kubelet
+        - kubeadm
+        - kubectl
+        - containerd
+
+  - name: Remove swapfile from /etc/fstab
+    mount:
+      name: "{{ item }}"
+      fstype: swap
+      state: absent
+    with_items:
+      - swap
+      - none
+
+  - name: Disable swap
+    command: swapoff -a
+    when: ansible_swaptotal_mb > 0          
+
+  - name: Configure node ip
+    lineinfile:
+      path: /etc/default/kubelet
+      line: KUBELET_EXTRA_ARGS=--node-ip={{ node_ip }}
+p      create: yes
+
+  - name: Restart machine
+    ansible.builtin.reboot:
+      
+  - name: Restart Kubelet
+    service:
+      name: kubelet
+      daemon_reload: yes
+      state: restarted
+
+  - name: Restart containerd
+    service:
+      name: containerd
+      daemon_reload: yes
+      state: restarted             
+          
+  - name: Copy the join command to server location
+    copy: src=join-command dest=/tmp/join-command.sh mode=0777
+
+  - name: Join the node to cluster
+    command: sh /tmp/join-command.sh
+
+  handlers:
+    - name: docker status
+      service: name=docker state=started 
+    - name: containerd status
+      service: name=containerd state=started    
