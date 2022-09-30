@@ -58,6 +58,8 @@
       - dnsutils
       - chrony
       - msitools
+      - sssd
+      - realmd
 
   - name: Stop and disable systemd-resolved
     systemd:
