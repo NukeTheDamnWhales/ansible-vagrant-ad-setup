@@ -6,14 +6,9 @@
 	workgroup = EXAMPLE
 	idmap_ldb:use rfc2307 = yes
 	idmap config * : backend = tdb
-	idmap config * range = 10000 - 20000
-	idmap config EXAMPLE:backend = ad
-	idmap config EXAMPLE:schema_mode = rfc2307
-	idmap config EXAMPLE:range = 10000-999999
-
-	vfs objects = acl_xattr
-	map acl inheret = yes
-	store dos attributes = yes
+	idmap config * : range = 3000-7999
+	idmap config EXAMPLE:backend = rid
+	idmap config EXAMPLE : range = 10000-999999
 
 	template shell = /bin/bash
 	template homedir = /home/%U
