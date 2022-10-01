@@ -60,6 +60,7 @@
       - msitools
       - sssd
       - sssd-tools
+      - libsss-simpleifp0
       - libnss-sss
       - libpam-sss
       - adcli
