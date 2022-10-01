@@ -59,6 +59,11 @@
       - chrony
       - msitools
       - sssd
+      - sssd-tools
+      - libnss-sss
+      - libpam-sss
+      - adcli
+      - samba-common-bin
       - realmd
 
   - name: Stop and disable systemd-resolved
