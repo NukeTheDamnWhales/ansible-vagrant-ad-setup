@@ -5,6 +5,8 @@
 	server role = active directory domain controller
 	workgroup = EXAMPLE
 	idmap_ldb:use rfc2307 = yes
+	idmap config * : backend = tdb
+	idmap config * range = 10000 - 20000
 
 [sysvol]
 	path = /var/lib/samba/sysvol
