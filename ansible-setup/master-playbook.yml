@@ -108,6 +108,9 @@
   - name: start samba from the command line
     command: samba
 
+  - name: create a new test user
+    command: samba-tool user create test Passw0rd
+
   # - name: install samba group policy objects
   #   command: samba-tool gpo admxload -U Administrator --password Passw0rd
 
