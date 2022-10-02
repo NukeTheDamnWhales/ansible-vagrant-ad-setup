@@ -51,21 +51,27 @@
       - dnsutils
       - chrony
 
-  - name: Stop and disable systemd-resolved
-    systemd:
-      name: "{{ item }}"
-      state: stopped
-      enabled: no
-    loop:
-      - samba-ad-dc.service
-      - smbd.service
-      - nmbd.service
-      - winbind.service
+  # - name: Stop and disable systemd-resolved
+  #   systemd:
+  #     name: "{{ item }}"
+  #     state: stopped
+  #     enabled: no
+  #   loop:
+  #     - samba-ad-dc.service
+  #     - smbd.service
+  #     - nmbd.service
+  #     - winbind.service
 
   - name: copy over sssd for dc
     copy:
       src: "{{ sssd_conf }}"
-      dest: /etc/sssd/sssd.conf    
+      dest: /etc/sssd/sssd.conf
+
+  - name: enable sssd
+    systemd:
+      name: sssd
+      state: started
+      enabled: yes      
             
   - name: Restart machine
     ansible.builtin.reboot:
