@@ -70,7 +70,7 @@
 
   - name: Copy over krb5.conf
     copy:
-      src: "{{ kbrb5_conf }}"
+      src: "{{ krb5_conf }}"
       dest: /etc/krb5.conf
 
   - name: Restart machine
