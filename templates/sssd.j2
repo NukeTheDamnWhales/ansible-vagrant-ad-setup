@@ -2,8 +2,12 @@
 domains = example.dragonflysys.com
 config_file_version = 2
 services = nss, pam
+ad_server = dc.example.dragonflysys.com
+id_provider = ad
+access_provider = ad
 
 [domain/ad1.example.com]
+auth_provider = ad
 default_shell = /bin/bash
 krb5_store_password_if_offline = True
 cache_credentials = True
