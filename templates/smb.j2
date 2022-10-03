@@ -5,15 +5,8 @@
 	server role = active directory domain controller
 	workgroup = EXAMPLE
         # UID/GID mapping for local users
-        idmap config * : backend = tdb
-        idmap config * : range = 3000-7999
-
-        # UID/GID mapping for domain users
-        idmap config INTERNAL : backend = ad
-        idmap config INTERNAL : schema_mode = rfc2307
-        idmap config INTERNAL : range = 10000-999999
-        idmap config INTERNAL : unix_nss_info = yes
-
+	idmap config *:backend = rid
+      	idmap config *:range = 10000-1000000
 	template shell = /bin/bash
 	template homedir = /home/%U
 
