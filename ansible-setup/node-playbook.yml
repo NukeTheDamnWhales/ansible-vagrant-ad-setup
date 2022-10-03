@@ -6,6 +6,7 @@
     hosts_file: "/home/vagrant/ansible/templates/dc-hosts.j2"
     sssd_file: "/home/vagrant/ansible/templates/sssd.j2"
     nsswitch: "/home/vagrant/ansible/templates/nsswitch.j2"
+    samba_conf: "/home/vagrant/ansible/templates/smb.j2"
   tasks:
   - name: Update Cache
     apt:
@@ -76,6 +77,11 @@
       src: "{{ nsswitch }}"
       dest: /etc/nsswitch.conf
             
+  - name: copy over smb conf with proper DNS forwarder enabled
+    copy:
+      src: "{{ samba_conf }}"
+      dest: /etc/samba/smb.conf
+
   - name: Restart machine
     ansible.builtin.reboot:
 
