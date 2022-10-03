@@ -37,7 +37,7 @@
       path: /etc/resolv.conf
       attr: i      
 
-  - name: install required packages on dc
+  - name: install required packages on node
     apt:
       name: "{{ item }}"
       update_cache: yes
@@ -76,12 +76,7 @@
   - name: Copy over nsswitch
     copy:
       src: "{{ nsswitch }}"
-      dest: /etc/nsswitch.conf
-            
-  - name: copy over smb conf with proper DNS forwarder enabled
-    copy:
-      src: "{{ samba_conf }}"
-      dest: /etc/samba/smb.conf
+      dest: /etc/nsswitch.conf            
 
   - name: Restart machine
     ansible.builtin.reboot:
