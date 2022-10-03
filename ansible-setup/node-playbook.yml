@@ -73,6 +73,9 @@
       src: "{{ krb5_conf }}"
       dest: /etc/krb5.conf
 
+  - name: echo dc into hosts
+    command: echo "192.168.50.10 dc DC" >> /etc/hosts
+
   - name: Restart machine
     ansible.builtin.reboot:
 
