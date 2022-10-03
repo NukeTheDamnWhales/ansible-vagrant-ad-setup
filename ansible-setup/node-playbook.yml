@@ -48,6 +48,7 @@
       - realmd
       - adcli
       - dnsutils
+      - winbind
       - chrony
 
   # - name: Stop and disable systemd-resolved
