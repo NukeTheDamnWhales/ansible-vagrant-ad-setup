@@ -110,16 +110,12 @@
       src: "{{ samba_conf }}"
       dest: /etc/samba/smb.conf
 
-  - name: enable and start systemd-resolved nmbd smbd winbind
+  - name: enable and start systemd-resolved 
     systemd:
-      name: "{{ item }}"
+      name: samba-ad-dc.service
       state: started
       enabled: yes
-    loop:
-      - samba-ad-dc.service
-      - smbd.service
-      - nmbd.service
-      - winbind.service
+
 
   - name: move the default Kerberos config to .bkp
     command: mv /etc/krb5.conf /etc/krb5.conf.bkp
