@@ -36,9 +36,6 @@
       path: /etc/resolv.conf
       attr: i      
 
-  - name: Restart machine
-    ansible.builtin.reboot:      
-
   - name: install required packages on dc
     apt:
       name: "{{ item }}"
