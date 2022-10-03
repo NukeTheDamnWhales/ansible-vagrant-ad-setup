@@ -101,6 +101,12 @@
       enabled: yes
       masked: no
 
+  - name: move the default Kerberos config to .bkp
+    command: mv /etc/krb5.conf /etc/krb5.conf.bkp
+      
+  - name: Copy over the generated kerberos config
+    command: cp /var/lib/samba/private/krb5.conf /etc/krb5.conf
+
             
   - name: Restart machine
     ansible.builtin.reboot:

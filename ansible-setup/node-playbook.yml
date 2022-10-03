@@ -71,13 +71,7 @@
     ansible.builtin.file:
       path: /etc/sssd/sssd.conf
       owner: root
-      mode: '0655'      
-
-  - name: enable and start sssd
-    systemd:
-      name: sssd
-      state: started
-      enabled: yes      
+      mode: '0600'      
             
   - name: Restart machine
     ansible.builtin.reboot:
