@@ -86,8 +86,8 @@
       src: "{{ pam_conf }}"
       dest: /etc/security/pam_winbind.conf
 
-  - name: create backup pam.d system-auth file before replacing
-    command: mv /etc/pam.d/system-auth /etc/pam.d/system-auth.bkp
+  # - name: create backup pam.d system-auth file before replacing
+  #   command: mv /etc/pam.d/system-auth /etc/pam.d/system-auth.bkp
 
   - name: change system-auth file
     copy:
