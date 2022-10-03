@@ -64,7 +64,7 @@
 
   - name: copy over sssd for dc
     copy:
-      src: "{{ sssd_conf }}"
+      src: "{{ sssd_file }}"
       dest: /etc/sssd/sssd.conf
 
   - name: enable sssd
