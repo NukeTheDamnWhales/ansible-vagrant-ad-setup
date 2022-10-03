@@ -115,6 +115,7 @@
       name: samba-ad-dc.service
       state: started
       enabled: yes
+      masked: no
 
 
   - name: move the default Kerberos config to .bkp
