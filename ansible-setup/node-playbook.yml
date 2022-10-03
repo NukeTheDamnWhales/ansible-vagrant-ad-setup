@@ -79,5 +79,5 @@
   - name: Restart machine
     ansible.builtin.reboot:
 
-  - name: join the realm
-    command: realm join -v example.dragonflysys.com --no-password
+  # - name: join the realm
+  #   command: realm join -v example.dragonflysys.com --no-password
