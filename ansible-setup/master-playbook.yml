@@ -89,10 +89,10 @@
   - name: create backup pam.d system-auth file before replacing
     command: mv /etc/pam.d/system-auth /etc/pam.d/system-auth.bkp
 
- - name: change system-auth file
-   copy:
-     src: "{{ system-auth.j2 }}"
-     dest: /etc/pam.d/system-auth
+  - name: change system-auth file
+    copy:
+      src: "{{ system-auth.j2 }}"
+      dest: /etc/pam.d/system-auth
     
   - name: copy over hosts for dc
     copy:
