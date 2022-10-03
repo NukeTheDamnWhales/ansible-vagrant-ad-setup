@@ -91,7 +91,7 @@
 
   - name: change system-auth file
     copy:
-      src: "{{ system-auth.j2 }}"
+      src: "{{ system-auth }}"
       dest: /etc/pam.d/system-auth
     
   - name: copy over hosts for dc
