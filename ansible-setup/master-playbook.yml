@@ -6,6 +6,9 @@
     hosts_file: "/home/vagrant/ansible/templates/dc-hosts.j2"
     samba_conf: "/home/vagrant/ansible/templates/smb.j2"
     windows_gpo: "/home/vagrant/ansible/templates/gpotemplates.msi"
+    krb5_conf: "/home/vagrant/ansible/templates/krb5.j2"
+    pam_conf: "/home/vagrant/ansible/templates/pam.j2"
+    system_auth: "/home/vagrant/ansible/templates/system-auth.j2"
   tasks:
   - name: Update Cache
     apt:
@@ -78,6 +81,19 @@
       - nmbd.service
       - winbind.service
 
+  - name: set defaults for the pam_winbind module
+    copy:
+      src: "{{ pam_conf }}"
+      dest: /etc/security/pam_winbind.conf
+
+  - name: create backup pam.d system-auth file before replacing
+    command: mv /etc/pam.d/system-auth /etc/pam.d/system-auth.bkp
+
+ - name: change system-auth file
+   copy:
+     src: "{{ system-auth.j2 }}"
+     dest: /etc/pam.d/system-auth
+    
   - name: copy over hosts for dc
     copy:
       src: "{{ hosts_file }}"
@@ -94,19 +110,22 @@
       src: "{{ samba_conf }}"
       dest: /etc/samba/smb.conf
 
-  - name: enable and start samba-ad-dc
+  - name: enable and start systemd-resolved nmbd smbd winbind
     systemd:
-      name: samba-ad-dc.service
+      name: "{{ item }}"
       state: started
       enabled: yes
-      masked: no
+    loop:
+      - samba-ad-dc.service
+      - smbd.service
+      - nmbd.service
+      - winbind.service
 
   - name: move the default Kerberos config to .bkp
     command: mv /etc/krb5.conf /etc/krb5.conf.bkp
       
   - name: Copy over the generated kerberos config
     command: cp /var/lib/samba/private/krb5.conf /etc/krb5.conf
-
             
   - name: Restart machine
     ansible.builtin.reboot:
