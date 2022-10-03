@@ -52,17 +52,6 @@
       - winbind
       - chrony
 
-  # - name: Stop and disable systemd-resolved
-  #   systemd:
-  #     name: "{{ item }}"
-  #     state: stopped
-  #     enabled: no
-  #   loop:
-  #     - samba-ad-dc.service
-  #     - smbd.service
-  #     - nmbd.service
-  #     - winbind.service
-
   # - name: copy over sssd for dc
   #   copy:
   #     src: "{{ sssd_file }}"
@@ -87,5 +76,3 @@
   - name: Restart machine
     ansible.builtin.reboot:
 
-  # - name: join the realm
-  #   command: realm join -v example.dragonflysys.com --no-password
