@@ -5,8 +5,7 @@
     resolv_conf: "/home/vagrant/ansible/templates/resolv.j2"
     hosts_file: "/home/vagrant/ansible/templates/dc-hosts.j2"
     samba_conf: "/home/vagrant/ansible/templates/smb.j2"
-    windows_gpo: "/home/vagrant/ansible/templates/gpotemplates.msi"
-    krb5_conf: "/home/vagrant/ansible/templates/krb5.j2"
+    windows_gpo: "/home/vagrant/ansible/templates/gpotemplates.msi"    
     pam_conf: "/home/vagrant/ansible/templates/pam.j2"
     system_auth: "/home/vagrant/ansible/templates/system-auth.j2"
   tasks:

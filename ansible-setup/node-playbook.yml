@@ -7,6 +7,7 @@
     sssd_file: "/home/vagrant/ansible/templates/sssd.j2"
     nsswitch: "/home/vagrant/ansible/templates/nsswitch.j2"
     samba_conf: "/home/vagrant/ansible/templates/smb.j2"
+    krb5_conf: "/home/vagrant/ansible/templates/krb5.j2"
   tasks:
   - name: Update Cache
     apt:
@@ -76,7 +77,12 @@
   - name: Copy over nsswitch
     copy:
       src: "{{ nsswitch }}"
-      dest: /etc/nsswitch.conf            
+      dest: /etc/nsswitch.conf
+
+  - name: Copy over krb5.conf
+    copy:
+      src: "{{ kbrb5_conf }}"
+      dest: /etc/krb5.conf
 
   - name: Restart machine
     ansible.builtin.reboot:
