@@ -5,6 +5,7 @@
     resolv_conf: "/home/vagrant/ansible/templates/resolv.j2"
     hosts_file: "/home/vagrant/ansible/templates/dc-hosts.j2"
     sssd_file: "/home/vagrant/ansible/templates/sssd.j2"
+    nsswitch: "/home/vagrant/ansible/templates/nsswitch.j2"
   tasks:
   - name: Update Cache
     apt:
@@ -71,7 +72,15 @@
     ansible.builtin.file:
       path: /etc/sssd/sssd.conf
       owner: root
-      mode: '0600'      
+      mode: '0600'
+
+  - name: Copy over nsswitch
+    copy:
+      src: "{{ nsswitch.j2 }}"
+      dest: /etc/nsswitch.conf
             
   - name: Restart machine
     ansible.builtin.reboot:
+
+  - name: join the realm
+    command: realm join -v example.dragonflysys.com --no-password
