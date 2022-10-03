@@ -67,7 +67,13 @@
       src: "{{ sssd_file }}"
       dest: /etc/sssd/sssd.conf
 
-  - name: enable sssd
+  - name: set sssd.conf file permissions and root ownership
+    ansible.builtin.file:
+      path: /etc/sssd/sssd.conf
+      owner: root
+      mode: '0655'      
+
+  - name: enable and start sssd
     systemd:
       name: sssd
       state: started
