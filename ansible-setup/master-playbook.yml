@@ -103,13 +103,18 @@
       enabled: yes
       masked: no
 
+  - name: Copy over pam_winbind
+    src: "{{ pam_conf }}"
+    dest: /etc/security/pam_winbind.conf
+
+  - name: Copy over system-auth
+    src: "{{ system_auth }}"
+    dest: /etc/security/pam_winbind.conf
+
 
   - name: move the default Kerberos config to .bkp
-    command: mv /etc/krb5.conf /etc/krb5.conf.bkp
+    command: cp /etc/krb5.conf /etc/krb5.conf.bkp
       
-  - name: Copy over the generated kerberos config
-    command: cp /var/lib/samba/private/krb5.conf /etc/krb5.conf
-            
   - name: Restart machine
     ansible.builtin.reboot:
 

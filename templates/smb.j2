@@ -4,9 +4,10 @@
 	realm = EXAMPLE.DRAGONFLYSYS.COM
 	server role = active directory domain controller
 	workgroup = EXAMPLE
-        # UID/GID mapping for local users
-	idmap config *:backend = rid
-      	idmap config *:range = 10000-1000000
+	winbind use default domain = yes
+	dedicated keytab file = /etc/krb5.keytab
+
+
 	template shell = /bin/bash
 	template homedir = /home/%U
 

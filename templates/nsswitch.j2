@@ -1,17 +1,17 @@
 # /etc/nsswitch.conf
-passwd: compat sss
-group: compat sss 
-shadow: compat sss
+passwd: files winbind mymachines systemd
+group: files winbind mymachines systemd
+shadow: files winbind mymachines systemd
 gshadow: files
 
 hosts: files dns
 networks: files
 
 protocols: db files
-services: db files sss
+services: db files winbind
 ethers: db files
 rpc: db files
 
-netgroup: nis sss
-sudoers: files sss
-automount: sss
+netgroup: nis winbind
+sudoers: files winbind
+automount: winbind
