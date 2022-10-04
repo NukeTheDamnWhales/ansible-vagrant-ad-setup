@@ -52,16 +52,16 @@
       - winbind
       - chrony
 
-  # - name: copy over sssd for dc
-  #   copy:
-  #     src: "{{ sssd_file }}"
-  #     dest: /etc/sssd/sssd.conf
+  - name: copy over sssd for dc
+    copy:
+      src: "{{ sssd_file }}"
+      dest: /etc/sssd/sssd.conf
 
-  # - name: set sssd.conf file permissions and root ownership
-  #   ansible.builtin.file:
-  #     path: /etc/sssd/sssd.conf
-  #     owner: root
-  #     mode: '0600'
+  - name: set sssd.conf file permissions and root ownership
+    ansible.builtin.file:
+      path: /etc/sssd/sssd.conf
+      owner: root
+      mode: '0600'
 
   - name: Copy over nsswitch
     copy:

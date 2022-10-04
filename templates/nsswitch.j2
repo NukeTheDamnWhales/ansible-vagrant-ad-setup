@@ -1,17 +1,17 @@
 # /etc/nsswitch.conf
-passwd: files winbind mymachines systemd
-group: files winbind mymachines systemd
-shadow: files winbind mymachines systemd
+passwd: files winbind sss systemd
+group: files winbind sss systemd
+shadow: files winbind sss systemd
 gshadow: files
 
 hosts: files dns
 networks: files
 
 protocols: db files
-services: db files winbind
+services: db files winbind sss
 ethers: db files
 rpc: db files
 
-netgroup: nis winbind
-sudoers: files winbind
-automount: winbind
+netgroup: nis winbind sss
+sudoers: files winbind sss
+automount: winbind sss
