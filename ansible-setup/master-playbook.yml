@@ -79,19 +79,6 @@
       - smbd.service
       - nmbd.service
       - winbind.service
-
-  - name: set defaults for the pam_winbind module
-    copy:
-      src: "{{ pam_conf }}"
-      dest: /etc/security/pam_winbind.conf
-
-  # - name: create backup pam.d system-auth file before replacing
-  #   command: mv /etc/pam.d/system-auth /etc/pam.d/system-auth.bkp
-
-  - name: change system-auth file
-    copy:
-      src: "{{ system_auth }}"
-      dest: /etc/pam.d/system-auth
     
   - name: copy over hosts for dc
     copy:
