@@ -5,6 +5,9 @@
 	server role = active directory domain controller
 	workgroup = EXAMPLE
 	winbind use default domain = yes
+	winbind enum users = yes
+	winbind enum groups = yes
+
 	dedicated keytab file = /etc/krb5.keytab
 
 	# idmap backend using tdb
