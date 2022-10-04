@@ -7,12 +7,24 @@
 	winbind use default domain = yes
 	dedicated keytab file = /etc/krb5.keytab
 
+	# idmap backend using tdb
+	idmap config * : backend = tdb
+	idmap config * : range = 10000-20000
+
+	# idmap config for the domain
+	idmap config EXAMPLE : backend = ad
+	idmap config EXAMPLE : schema_mode = rfc2307
+	idmap config EXAMPLE : range = 100-7000
+	idmap config EXAMPLE : unix_nss_info = yes
 
 	template shell = /bin/bash
 	template homedir = /home/%U
 
-	winbind offline login = yes
-	winbind refresh tickets = yes
+	vfs objects = acl_xattr
+	map acl inherit = yes
+	store dos attributes = yes
+	kerberos method = secrets and keytab
+
 	valid users = all
 
 [sysvol]
