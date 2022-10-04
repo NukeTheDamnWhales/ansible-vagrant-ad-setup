@@ -8,6 +8,7 @@
     windows_gpo: "/home/vagrant/ansible/templates/gpotemplates.msi"    
     pam_conf: "/home/vagrant/ansible/templates/pam.j2"
     system_auth: "/home/vagrant/ansible/templates/system-auth.j2"
+    krb5_conf: "/home/vagrant/ansible/templates/krb5.j2"
   tasks:
   - name: Update Cache
     apt:
@@ -116,6 +117,11 @@
 
   - name: move the default Kerberos config to .bkp
     command: cp /etc/krb5.conf /etc/krb5.conf.bkp
+
+  - name: copy over new krb5.conf
+    copy:
+      src: "{{ krb5_conf }}"
+      dest: /etc/krb5.conf
       
   - name: Restart machine
     ansible.builtin.reboot:
