@@ -104,12 +104,14 @@
       masked: no
 
   - name: Copy over pam_winbind
-    src: "{{ pam_conf }}"
-    dest: /etc/security/pam_winbind.conf
+    copy:
+      src: "{{ pam_conf }}"
+      dest: /etc/security/pam_winbind.conf
 
   - name: Copy over system-auth
-    src: "{{ system_auth }}"
-    dest: /etc/security/pam_winbind.conf
+    copy:
+      src: "{{ system_auth }}"
+      dest: /etc/security/pam_winbind.conf
 
 
   - name: move the default Kerberos config to .bkp
