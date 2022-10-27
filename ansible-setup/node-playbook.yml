@@ -56,7 +56,7 @@
     copy:
       src: "{{ sssd_file }}"
       dest: /etc/sssd/sssd.conf
-
+      
   - name: set sssd.conf file permissions and root ownership
     ansible.builtin.file:
       path: /etc/sssd/sssd.conf
@@ -75,6 +75,11 @@
 
   - name: echo dc into hosts
     command: echo "192.168.50.10 dc DC" >> /etc/hosts
+
+  - name: copy over smb conf with proper DNS forwarder enabled
+    copy:
+      src: "{{ samba_conf }}"
+      dest: /etc/samba/smb.conf    
 
   - name: Restart machine
     ansible.builtin.reboot:
