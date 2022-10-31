@@ -2,13 +2,13 @@
 - hosts: all
   become: true
   vars:
-    resolv_conf: "/home/vagrant/ansible-vagrant-ad-setup/templates/resolv.j2"
-    hosts_file: "/home/vagrant/ansible-vagrant-ad-setup/templates/dc-hosts.j2"
-    samba_conf: "/home/vagrant/ansible-vagrant-ad-setup/templates/smb.j2"
-    windows_gpo: "/home/vagrant/ansible-vagrant-ad-setup/templates/gpotemplates.msi"    
-    pam_conf: "/home/vagrant/ansible-vagrant-ad-setup/templates/pam.j2"
-    system_auth: "/home/vagrant/ansible-vagrant-ad-setup/templates/system-auth.j2"
-    krb5_conf: "/home/vagrant/ansible-vagrant-ad-setup/templates/krb5.j2"
+    resolv_conf: "/home/vagrant/ansible/templates/resolv.j2"
+    hosts_file: "/home/vagrant/ansible/templates/dc-hosts.j2"
+    samba_conf: "/home/vagrant/ansible/templates/smb.j2"
+    windows_gpo: "/home/vagrant/ansible/templates/gpotemplates.msi"    
+    pam_conf: "/home/vagrant/ansible/templates/pam.j2"
+    system_auth: "/home/vagrant/ansible/templates/system-auth.j2"
+    krb5_conf: "/home/vagrant/ansible/templates/krb5.j2"
   tasks:
   - name: Update Cache
     apt:
