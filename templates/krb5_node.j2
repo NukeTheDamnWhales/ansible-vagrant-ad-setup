@@ -1,0 +1,30 @@
+[libdefaults]
+   default_realm = EXAMPLE.DRAGONFLYSYS.COM
+   dns_lookup_realm = false
+   dns_lookup_kdc = true
+   forward = true
+   forwardable = true
+
+[realms]
+   EXAMPLE.DRAGONFLYSYS.COM = {
+      kdc = DC.EXAMPLE.DRAGONFLYSYS.COM
+      default_domain = EXAMPLE.DRAGONFLYSYS.COM
+      admin_server = DC.EXAMPLE.DRAGONFLYSYS.COM
+   }
+   EXAMPLE = {
+      kdc = DC.EXAMPLE.DRAGONFLYSYS.COM
+      default_domain = EXAMPLE.DRAGONFLYSYS.COM
+      admin_server = DC.EXAMPLE.DRAGONFLYSYS.COM
+   }
+
+[domain_realm]
+    .internal.domain.tld = EXAMPLE.DRAGONFLYSYS.COM
+
+[appdefaults]
+    pam = {
+        ticket_lifetime = 1d
+        renew_lifetime = 1d
+        forwardable = true
+        proxiable = false
+        minimum_uid = 1
+    }
